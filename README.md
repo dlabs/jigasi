@@ -3,6 +3,34 @@ Jigasi
 
 Jitsi Gateway to SIP : a server-side application that links allows regular SIP clients to join Jitsi Meet conferences hosted by Jitsi Videobridge.
 
+Jearni specific notes
+======================
+
+To build a new version of debian package which can later be used to install jigasi into its appropriate docker image,
+follow these steps:
+
+* Build a "builder image"
+From within `builderpkg-debian` folder, run the following command to build a builder image:
+
+`docker build --tag deb_builder:0.1 .`
+
+* Run the image and enter its shell, mouting the root of this project into container's `/home/jigasi` folder:
+
+`docker run -v {PATH_TO_THIS_FOLDER}:/home/jigasi -it deb_builder:0.1 bash`
+
+* Within container's shell, enter `/home/jigasi/script` folder and run the build script:
+
+`cd /home/jigasi/script && ./build_deb_package.sh`
+
+* Wait (a while :)
+
+* The resulting `.deb` file can be found in `/home` folder inside the container. The filename is versioned automatically
+ from commit history. Move it into `/home/jearni` folder in order to be able to access it from the host machine.
+ E.g., if deb file is named `jigasi_1.1-176-g4688b66-1_amd64.deb`, run: 
+ `cd /home && cp jigasi_1.1-176-g4688b66-1_amd64.deb jigasi/`.
+
+* Finally, upload the generated deb file into `jearni-deb` S3 bucket, while making sure the file can be read publicly.
+
 Install and run
 ============
 
