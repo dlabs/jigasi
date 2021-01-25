@@ -14,7 +14,7 @@ From within `builderpkg-debian` folder, run the following command to build a bui
 
 `docker build --tag deb_builder:0.1 .`
 
-* Run the image and enter its shell, mouting the root of this project into container's `/home/jigasi` folder:
+* Run the image and enter its shell, mounting the root of this project into container's `/home/jigasi` folder:
 
 `docker run -v {PATH_TO_THIS_FOLDER}:/home/jigasi -it deb_builder:0.1 bash`
 
